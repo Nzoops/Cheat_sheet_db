@@ -27,6 +27,11 @@ Run migration in terminal
 ```
 $ rails db:migrate
 ```
+
+Check the up & down status
+```
+$ rails db:migrate:status
+```
 ## CRUD
 ### Create
 ```
