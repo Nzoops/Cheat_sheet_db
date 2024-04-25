@@ -108,7 +108,17 @@ require 'faker'
   user = User.create!(first_name: Faker::Name.first_name, email: Faker::Internet.email)
 end
 ```
+### To add relation 1-N 
 
+To create a link in the mother table and include the child's id, user: 
+
+```
+t.belongs_to :user, index: true
+```
+OR
+```
+add_reference :articles, :user, foreign_key: true
+```
 
 ### Links
 
