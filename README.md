@@ -109,7 +109,7 @@ require 'faker'
 end
 ```
 ### To add relation 1-N 
-
+1. In migration
 To create a link in the mother table and include the child's id, user: 
 
 ```
@@ -118,6 +118,47 @@ t.belongs_to :user, index: true
 OR
 ```
 add_reference :articles, :user, foreign_key: true
+```
+*note: articles is a table = plural, user is unique = singular* 
+
+2. In the models
+a. For the N
+```
+class Child < ApplicationRecord
+  belongs_to :parent
+end
+```
+b. For the 1
+```
+class Parent < ApplicationRecord
+  has_many :childs
+end
+```
+c. Testing procedure (in console)
+```
+> a = Article.new #=> Un article pas encore sauvegardé
+> a.user #=> il doit te renvoyer nil. S'il te renvoie une erreur, le lien est mal fait !
+> u = User.first #=> un superbe user. S'il n'y en a pas encore, crées-en un.
+> a.user = u #=> A nouveau, s'il te renvoie une erreur, le lien est mal fait !
+> a.save #=> COMMIT. S'il te renvoie une erreur, tu as mal suivi ce tuto
+> Article.last.user.articles #=> Récupère les articles du user lié au dernier article créé en base (celui que tu viens de créer) #=> Devrait te renvoyer un array qui contient l'article que tu viens de créer. Sinon c'est que le lien est mal fait.
+```
+### To add relation N-N 
+
+1. In the models
+a. The join table
+```
+class Appointment < ApplicationRecord
+  belongs_to :doctor
+  belongs_to :patient
+end
+```
+b. the Doctor/Patiens
+```
+class Doctor < ApplicationRecord #or Patient
+  has_many :appointments
+  has_many :patients, through: :appointments # ordoctors
+end
 ```
 
 ### Links
