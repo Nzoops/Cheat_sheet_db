@@ -161,6 +161,14 @@ class Doctor < ApplicationRecord #or Patient
 end
 ```
 
+### For testing
+
+To drop the tables and have the id starting back at 1.
+
+```
+rails db:reset
+```
+
 ### Links
 
 https://api.rubyonrails.org/
